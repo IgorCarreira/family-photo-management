@@ -38,7 +38,7 @@ export async function getAlbumById(albumId: number): Promise<AlbumGetResponse> {
   }
 
   const photosResponse = await fetch(
-    `https://jsonplaceholder.typicode.com/photos`,
+    "https://jsonplaceholder.typicode.com/photos",
   );
 
   if (!photosResponse.ok) {
@@ -54,4 +54,57 @@ export async function getAlbumById(albumId: number): Promise<AlbumGetResponse> {
     title: album.title,
     user: { username: user.username },
   };
+}
+
+export async function createAlbum(body?: Partial<Album>): Promise<Album> {
+  const albumResponse = await fetch(
+    "https://jsonplaceholder.typicode.com/albums",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    },
+  );
+
+  const album: Album = await albumResponse.json();
+
+  return album;
+}
+
+export async function deleteAlbum(albumId: number): Promise<Album> {
+  const albumResponse = await fetch(
+    `https://jsonplaceholder.typicode.com/albums/${albumId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+
+  const album: Album = await albumResponse.json();
+
+  return album;
+}
+
+export async function patchAlbum(
+  albumId: number,
+  body?: Partial<Album>,
+): Promise<Album> {
+  const albumResponse = await fetch(
+    `https://jsonplaceholder.typicode.com/albums/${albumId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    },
+  );
+
+  const album: Album = await albumResponse.json();
+
+  return album;
 }
