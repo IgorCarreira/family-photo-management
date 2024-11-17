@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { NotFound } from "./pages/404";
 import AppLayout from "./pages/_layout/app";
 import { MyUsers } from "./pages/my-users/my-users";
+import { Albums } from "./pages/albums/albums";
 
 export const router = createBrowserRouter(
   [
@@ -17,6 +18,10 @@ export const router = createBrowserRouter(
         {
           path: "/my-users",
           element: <MyUsers />,
+        },
+        {
+          path: "/my-users/:userId/albums",
+          element: <Albums />,
         },
       ],
     },
