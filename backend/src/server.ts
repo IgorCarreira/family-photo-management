@@ -1,7 +1,10 @@
 import fastify from "fastify";
 import { registerRoutes } from "./routes";
+import { registerPlugins } from "./plugins";
 
 const app = fastify();
+
+registerPlugins(app);
 
 registerRoutes(app);
 
