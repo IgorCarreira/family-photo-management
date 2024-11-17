@@ -1,10 +1,9 @@
 import { GetAlbumPhotosResponse } from "../../types/album.types";
 import { Photo } from "../../types/photos.types";
-import { User } from "../../types/users.types";
 import { getAlbumById } from "../albums/albums.service";
 
 export async function getAlbumsPhotos(
-  albumId: number
+  albumId: number,
 ): Promise<GetAlbumPhotosResponse> {
   const response = await fetch("https://jsonplaceholder.typicode.com/photos");
 
@@ -21,7 +20,7 @@ export async function getAlbumsPhotos(
 
 export async function getPhotoById(photoId: number): Promise<Photo> {
   const response = await fetch(
-    `https://jsonplaceholder.typicode.com/photos/${photoId}`
+    `https://jsonplaceholder.typicode.com/photos/${photoId}`,
   );
   const photo = (await response.json()) as Photo;
   return photo;

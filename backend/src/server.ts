@@ -16,5 +16,5 @@ app.listen(
       process.exit(1);
     }
     console.log(`HTTP Server running at ${address}`);
-  }
+  },
 );

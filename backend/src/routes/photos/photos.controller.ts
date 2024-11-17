@@ -9,7 +9,7 @@ interface GetAlbumsPhotosRequest {
 
 export async function getAlbumsPhotosHandler(
   request: FastifyRequest<GetAlbumsPhotosRequest>,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) {
   const albumId = request.params.id;
 
@@ -17,13 +17,13 @@ export async function getAlbumsPhotosHandler(
     const albumsPhotos = await getAlbumsPhotos(Number(albumId));
     return reply.status(200).send(albumsPhotos);
   } catch (error) {
-    return reply.status(500).send({ error: "Failed to fetch photos" });
+    return reply.status(500).send({ message: "Failed to fetch photos", error });
   }
 }
 
 export async function getPhotosByIdHandler(
   request: FastifyRequest<GetAlbumsPhotosRequest>,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) {
   const photoId = request.params.id;
 
@@ -31,6 +31,6 @@ export async function getPhotosByIdHandler(
     const albumsPhotos = await getPhotoById(Number(photoId));
     return reply.status(200).send(albumsPhotos);
   } catch (error) {
-    return reply.status(500).send({ error: "Failed to fetch photo" });
+    return reply.status(500).send({ message: "Failed to fetch photo", error });
   }
 }

@@ -3,14 +3,13 @@ import {
   AlbumGetResponse,
   AlbumListResponse,
 } from "../../types/album.types";
-import { Photo } from "../../types/photos.types";
 import { getUserById } from "../users/users.service";
 
 export async function getUserAlbums(
-  userId: number
+  userId: number,
 ): Promise<AlbumListResponse> {
   const response = await fetch(
-    `https://jsonplaceholder.typicode.com/users/${userId}/albums`
+    `https://jsonplaceholder.typicode.com/users/${userId}/albums`,
   );
 
   if (!response.ok) {
@@ -31,7 +30,7 @@ export async function getUserAlbums(
 
 export async function getAlbumById(albumId: number): Promise<AlbumGetResponse> {
   const response = await fetch(
-    `https://jsonplaceholder.typicode.com/albums/${albumId}`
+    `https://jsonplaceholder.typicode.com/albums/${albumId}`,
   );
 
   if (!response.ok) {
@@ -39,14 +38,12 @@ export async function getAlbumById(albumId: number): Promise<AlbumGetResponse> {
   }
 
   const photosResponse = await fetch(
-    `https://jsonplaceholder.typicode.com/photos`
+    `https://jsonplaceholder.typicode.com/photos`,
   );
 
   if (!photosResponse.ok) {
     throw new Error("Failed to fetch photos");
   }
-
-  const photos: Photo[] = await photosResponse.json();
 
   const album: Album = await response.json();
 

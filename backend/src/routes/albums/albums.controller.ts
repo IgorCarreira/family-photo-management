@@ -9,7 +9,7 @@ interface GetUserAlbumsRequest {
 
 export async function getUserAlbumsHandler(
   request: FastifyRequest<GetUserAlbumsRequest>,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) {
   const userId = request.params.id;
 
@@ -17,13 +17,13 @@ export async function getUserAlbumsHandler(
     const albums = await getUserAlbums(Number(userId));
     return reply.status(200).send(albums);
   } catch (error) {
-    return reply.status(500).send({ error: "Failed to fetch albums" });
+    return reply.status(500).send({ message: "Failed to fetch albums", error });
   }
 }
 
 export async function getAlbumByIdHandler(
   request: FastifyRequest<GetUserAlbumsRequest>,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) {
   const albumId = request.params.id;
 
@@ -31,6 +31,6 @@ export async function getAlbumByIdHandler(
     const albums = await getAlbumById(Number(albumId));
     return reply.status(200).send(albums);
   } catch (error) {
-    return reply.status(500).send({ error: "Failed to fetch album" });
+    return reply.status(500).send({ message: "Failed to fetch album", error });
   }
 }
