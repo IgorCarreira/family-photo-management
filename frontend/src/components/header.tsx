@@ -27,7 +27,7 @@ export const Header = () => {
         )}
 
         <div className="ml-auto flex items-center gap-8">
-          {user && <p>Hello, {user.username}!</p>}
+          {user && <p className="select-none">Hello, {user.username}!</p>}
           <ModeToggle />
         </div>
       </div>
