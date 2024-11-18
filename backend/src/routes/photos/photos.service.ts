@@ -11,11 +11,11 @@ export async function getAlbumsPhotos(
     throw new Error("Failed to fetch photos");
   }
 
-  const photos: Photo[] = await response.json();
+  const photos = (await response.json()) as Photo[];
 
   const album = await getAlbumById(albumId);
 
-  return { album, photos };
+  return { album, photos: photos.slice(0, 10) };
 }
 
 export async function getPhotoById(photoId: number): Promise<Photo> {
@@ -38,7 +38,7 @@ export async function createPhoto(body: Omit<Photo, "id">): Promise<Photo> {
     },
   );
 
-  const photo: Photo = await photoResponse.json();
+  const photo = (await photoResponse.json()) as Photo;
 
   return photo;
 }
@@ -54,7 +54,7 @@ export async function deletePhoto(photoId: number): Promise<Photo> {
     },
   );
 
-  const photo: Photo = await photoResponse.json();
+  const photo = (await photoResponse.json()) as Photo;
 
   return photo;
 }
@@ -74,7 +74,7 @@ export async function patchPhoto(
     },
   );
 
-  const photo: Photo = await photoResponse.json();
+  const photo = (await photoResponse.json()) as Photo;
 
   return photo;
 }
