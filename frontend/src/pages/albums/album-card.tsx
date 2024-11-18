@@ -1,4 +1,5 @@
 import { deleteAlbum, patchAlbum } from "@/api/albums";
+import { useAuth } from "@/components/auth-context";
 import { AlertDialog } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
@@ -24,6 +25,7 @@ interface AlbumCardProps {
 
 export const AlbumCard = ({ album }: AlbumCardProps) => {
   const { userId } = useParams();
+  const { user } = useAuth();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isPatchDialogOpen, setIsPatchDialogOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -49,6 +51,8 @@ export const AlbumCard = ({ album }: AlbumCardProps) => {
       }));
     },
   });
+
+  const isCurrentUser = String(user?.id) === userId;
 
   const handleClickDelete = async () => {
     try {
@@ -84,35 +88,37 @@ export const AlbumCard = ({ album }: AlbumCardProps) => {
         <div className="flex flex-col">
           <span className="select-none">{album.title}</span>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost">
-              <EllipsisVertical />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem
-              className="flex justify-between"
-              onClick={(event) => {
-                event.stopPropagation();
-                setIsPatchDialogOpen(true);
-              }}
-            >
-              <p>Edit</p>
-              <Pencil />
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="flex justify-between text-red-500"
-              onClick={(event) => {
-                event.stopPropagation();
-                setIsDeleteDialogOpen(true);
-              }}
-            >
-              <p>Delete</p>
-              <Trash2 />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {isCurrentUser && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost">
+                <EllipsisVertical />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                className="flex justify-between"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setIsPatchDialogOpen(true);
+                }}
+              >
+                <p>Edit</p>
+                <Pencil />
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex justify-between text-red-500"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setIsDeleteDialogOpen(true);
+                }}
+              >
+                <p>Delete</p>
+                <Trash2 />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </Link>
       <AlertDialog
         open={isDeleteDialogOpen}

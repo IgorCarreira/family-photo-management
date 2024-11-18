@@ -1,15 +1,27 @@
 import { fetchUsers } from "@/api/users";
-import { User } from "@/types/user";
-import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/components/auth-context";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { UserCard } from "./user-card";
-import { Loader2 } from "lucide-react";
 
 export const MyUsers = () => {
-  const { data: users, isLoading } = useQuery<User[]>({
+  const queryClient = useQueryClient();
+  const { setUser } = useAuth();
+
+  const { data: users, isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: fetchUsers,
+    enabled: () => !queryClient.getQueryData(["users"]),
   });
+
+  useEffect(() => {
+    if (users && users.length > 0) {
+      setUser(users[0]);
+    }
+  }, [users, setUser]);
+
   return (
     <>
       <Helmet title="My users" />

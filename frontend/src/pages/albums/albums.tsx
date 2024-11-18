@@ -1,4 +1,5 @@
 import { createAlbum, fetchAlbums } from "@/api/albums";
+import { useAuth } from "@/components/auth-context";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Album, AlbumResponse } from "@/types/albums";
@@ -13,6 +14,7 @@ import { AlbumCard } from "./album-card";
 import { AlbumCreateDialog } from "./album-create-dialog";
 
 export const Albums = () => {
+  const { user } = useAuth();
   const { userId } = useParams();
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery({
@@ -29,6 +31,8 @@ export const Albums = () => {
       }));
     },
   });
+
+  const isCurrentUser = String(user?.id) === userId;
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
@@ -60,17 +64,21 @@ export const Albums = () => {
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold tracking-tight">
-            {data?.user?.username || "User"}'s albums
+            {isCurrentUser
+              ? "My albums"
+              : `${data?.user?.username || "User"}'s albums`}
           </h1>
-          <Button
-            className="flex gap-2"
-            onClick={() => {
-              setIsCreateDialogOpen(true);
-            }}
-          >
-            <PlusCircle />
-            <p>Create new album</p>
-          </Button>
+          {isCurrentUser && (
+            <Button
+              className="flex gap-2"
+              onClick={() => {
+                setIsCreateDialogOpen(true);
+              }}
+            >
+              <PlusCircle />
+              <p>Create new album</p>
+            </Button>
+          )}
         </div>
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-3 xl:grid-cols-4">
           {data?.albums?.map((album) => (

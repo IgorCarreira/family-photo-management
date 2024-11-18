@@ -1,4 +1,5 @@
 import { addPhoto, fetchPhotos } from "@/api/photos";
+import { useAuth } from "@/components/auth-context";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Photo, PhotosResponse } from "@/types/photos";
@@ -9,10 +10,11 @@ import { Helmet } from "react-helmet-async";
 import { SubmitHandler } from "react-hook-form";
 import { useLocation, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { PhotoCard } from "./photo-card";
 import { AddPhotoDialog } from "./add-photo-dialog";
+import { PhotoCard } from "./photo-card";
 
 export const Photos = () => {
+  const { user } = useAuth();
   const { albumId } = useParams();
   const { state } = useLocation();
   const queryClient = useQueryClient();
@@ -82,7 +84,7 @@ export const Photos = () => {
               {state?.title || data?.album?.title || "Album"}
             </h1>
             <p className="text-sm text-muted-foreground">
-              {data?.album.user.username}'s album
+              {user ? "My album" : `${data?.album.user.username}'s album`}
             </p>
           </div>
           <Button

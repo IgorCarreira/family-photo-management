@@ -1,6 +1,7 @@
+import { User } from "@/types/user";
 import { apiUrl } from "./url";
 
-export const fetchUsers = async () => {
+export const fetchUsers = async (): Promise<User[]> => {
   const response = await fetch(`${apiUrl}/users`);
 
   if (!response.ok) {
