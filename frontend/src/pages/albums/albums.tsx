@@ -70,11 +70,18 @@ export const Albums = () => {
       <Helmet title={`${data?.user?.username || "User"}'s albums`} />
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold tracking-tight">
-            {isCurrentUser
-              ? "My albums"
-              : `${data?.user?.username || "User"}'s albums`}
-          </h1>
+          <div className="flex flex-col">
+            <h1 className="text-3xl font-bold tracking-tight">
+              {isCurrentUser
+                ? "My albums"
+                : `${data?.user?.username || "User"}'s albums`}
+            </h1>
+            {data?.user?.email && (
+              <p className="text-sm text-muted-foreground">
+                {data?.user?.email}
+              </p>
+            )}
+          </div>
           {isCurrentUser && (
             <Button
               className="flex gap-2"
