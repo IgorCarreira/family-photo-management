@@ -54,7 +54,10 @@ export const AddPhotoDialog = ({ handleCreate }: AddPhotoDialogProps) => {
       <Form {...form}>
         <form
           id="levelForm"
-          onSubmit={form.handleSubmit(handleCreate)}
+          onSubmit={form.handleSubmit(async (data) => {
+            await handleCreate(data);
+            form.reset();
+          })}
           className="flex flex-col gap-2"
         >
           <ImageInputField
