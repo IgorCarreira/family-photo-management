@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -34,6 +35,8 @@ export const AlbumPatchDialog = ({
       <DialogHeader>
         <DialogTitle>Edit album</DialogTitle>
       </DialogHeader>
+
+      <DialogDescription hidden>Patch album form</DialogDescription>
 
       <Form {...form}>
         <form

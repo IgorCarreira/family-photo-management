@@ -3,6 +3,7 @@ import { useAuth } from "@/components/auth-context";
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -54,6 +55,8 @@ export const PhotoPatchDialog = ({
       <DialogHeader>
         <DialogTitle>Edit photo</DialogTitle>
       </DialogHeader>
+
+      <DialogDescription hidden>Patch photo form</DialogDescription>
 
       <Form {...form}>
         <form

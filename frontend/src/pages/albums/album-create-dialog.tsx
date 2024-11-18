@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -29,6 +30,7 @@ export const AlbumCreateDialog = ({ handleCreate }: AlbumCreateDialogProps) => {
       <DialogHeader>
         <DialogTitle>Create album</DialogTitle>
       </DialogHeader>
+      <DialogDescription hidden>Create album form</DialogDescription>
 
       <Form {...form}>
         <form

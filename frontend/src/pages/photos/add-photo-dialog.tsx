@@ -3,6 +3,7 @@ import { useAuth } from "@/components/auth-context";
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -52,6 +53,8 @@ export const AddPhotoDialog = ({ handleCreate }: AddPhotoDialogProps) => {
       <DialogHeader>
         <DialogTitle>Add photo</DialogTitle>
       </DialogHeader>
+
+      <DialogDescription hidden>Add photo form</DialogDescription>
 
       <Form {...form}>
         <form
