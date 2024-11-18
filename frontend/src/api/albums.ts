@@ -1,4 +1,4 @@
-import { AlbumResponse } from "@/types/albums";
+import { Album, AlbumResponse } from "@/types/albums";
 import { apiUrl } from "./url";
 
 export const fetchAlbums =
@@ -11,3 +11,29 @@ export const fetchAlbums =
 
     return response.json();
   };
+
+export const deleteAlbum = async (albumId: number): Promise<Album> => {
+  const response = await fetch(`${apiUrl}/albums/${albumId}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete album");
+  }
+
+  return response.json();
+};
+
+export const patchAlbum = async (album: Album): Promise<Album> => {
+  const response = await fetch(`${apiUrl}/albums/${album.id}`, {
+    method: "PATCH",
+    body: JSON.stringify(album),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to patch album");
+  }
+
+  return response.json();
+};

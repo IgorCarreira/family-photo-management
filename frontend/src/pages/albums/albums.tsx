@@ -1,5 +1,5 @@
 import { fetchAlbums } from "@/api/albums";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
@@ -7,10 +7,12 @@ import { AlbumCard } from "./album-card";
 
 export const Albums = () => {
   const { userId } = useParams();
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
     queryKey: ["albums", userId],
     queryFn: userId ? fetchAlbums(Number(userId)) : undefined,
+    enabled: () => !queryClient.getQueryData(["albums", userId]),
   });
 
   if (isLoading)
