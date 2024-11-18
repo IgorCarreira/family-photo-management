@@ -77,6 +77,7 @@ export const AlbumCard = ({ album }: AlbumCardProps) => {
     <>
       <Link
         to={`/albums/${album.id}/photos`}
+        state={{ title: album.title }}
         className="grid grid-cols-[15%_1fr_10%] border rounded p-4 cursor-pointer hover:border-primary items-center gap-4 bg-card"
       >
         <AlbumIcon className="size-10" />

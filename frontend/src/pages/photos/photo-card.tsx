@@ -8,7 +8,7 @@ export const PhotoCard = ({ photo }: PhotoCardProps) => {
   return (
     <div className="space-y-3 w-[150px] h-auto">
       <img
-        src={photo.thumbnailUrl}
+        src={photo.url}
         alt={photo.title}
         width={150}
         height={150}

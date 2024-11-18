@@ -22,7 +22,7 @@ export const Albums = () => {
   });
   const { mutateAsync: createAlbumFn } = useMutation({
     mutationFn: createAlbum,
-    onSuccess(_, variables: Album) {
+    onSuccess(_, variables) {
       queryClient.setQueryData(["albums", userId], (data: AlbumResponse) => ({
         ...data,
         albums: [...data.albums, variables],
