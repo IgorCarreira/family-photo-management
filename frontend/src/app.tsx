@@ -6,7 +6,9 @@ import { ThemeProvider } from "./components/theme-provider";
 import "./index.css";
 import { router } from "./routes";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnWindowFocus: false } },
+});
 
 export function App() {
   return (
