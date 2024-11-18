@@ -97,7 +97,7 @@ export const AlbumCard = ({ album }: AlbumCardProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem
-                className="flex justify-between"
+                className="flex justify-between cursor-pointer"
                 onClick={(event) => {
                   event.stopPropagation();
                   setIsPatchDialogOpen(true);
@@ -107,7 +107,7 @@ export const AlbumCard = ({ album }: AlbumCardProps) => {
                 <Pencil />
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="flex justify-between text-red-500"
+                className="flex justify-between text-red-500 cursor-pointer"
                 onClick={(event) => {
                   event.stopPropagation();
                   setIsDeleteDialogOpen(true);

@@ -133,7 +133,7 @@ export const PhotoCard = ({ photo, isCurrentUser }: PhotoCardProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem
-                className="flex justify-between"
+                className="flex justify-between cursor-pointer"
                 onClick={(event) => {
                   event.stopPropagation();
                   setIsPatchDialogOpen(true);
@@ -143,7 +143,7 @@ export const PhotoCard = ({ photo, isCurrentUser }: PhotoCardProps) => {
                 <Pencil />
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="flex justify-between text-red-500"
+                className="flex justify-between text-red-500 cursor-pointer"
                 onClick={(event) => {
                   event.stopPropagation();
                   setIsDeleteDialogOpen(true);
