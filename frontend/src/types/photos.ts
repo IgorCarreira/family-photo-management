@@ -9,6 +9,6 @@ export interface Photo {
 }
 
 export interface PhotosResponse {
-  album: Album & { user: { username: string } };
+  album: Album & { user: { id: number; username: string } };
   photos: Photo[];
 }

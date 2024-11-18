@@ -24,6 +24,8 @@ export const Photos = () => {
     enabled: () => !queryClient.getQueryData(["photos", albumId]),
   });
 
+  const isCurrentUser = user?.id === data?.album.user.id;
+
   const { mutateAsync: addPhotoFn } = useMutation({
     mutationFn: addPhoto,
     async onSuccess(_, variables) {
@@ -84,22 +86,30 @@ export const Photos = () => {
               {state?.title || data?.album?.title || "Album"}
             </h1>
             <p className="text-sm text-muted-foreground">
-              {user ? "My album" : `${data?.album.user.username}'s album`}
+              {isCurrentUser
+                ? "My album"
+                : `${data?.album.user.username}'s album`}
             </p>
           </div>
-          <Button
-            className="flex gap-2"
-            onClick={() => {
-              setIsCreateDialogOpen(true);
-            }}
-          >
-            <CameraIcon />
-            <p>Add new photo</p>
-          </Button>
+          {isCurrentUser && (
+            <Button
+              className="flex gap-2"
+              onClick={() => {
+                setIsCreateDialogOpen(true);
+              }}
+            >
+              <CameraIcon />
+              <p>Add new photo</p>
+            </Button>
+          )}
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 ">
           {data?.photos?.map((photo) => (
-            <PhotoCard photo={photo} key={photo.id} />
+            <PhotoCard
+              photo={photo}
+              isCurrentUser={isCurrentUser}
+              key={photo.id}
+            />
           ))}
         </div>
       </div>
