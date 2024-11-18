@@ -2,6 +2,7 @@ import { Album, Camera, Users } from "lucide-react";
 import { useAuth } from "./auth-context";
 import { ModeToggle } from "./mode-toggle";
 import NavLink from "./nav-link";
+import { AddPhotoButton } from "./add-photo-button";
 
 export const Header = () => {
   const { user } = useAuth();
@@ -26,8 +27,13 @@ export const Header = () => {
           </nav>
         )}
 
-        <div className="ml-auto flex items-center gap-8">
-          {user && <p className="select-none">Hello, {user.username}!</p>}
+        <div className="ml-auto flex items-center gap-2 ">
+          {user && (
+            <p className="select-none mr-4 hidden sm:flex">
+              Hello, {user.username}!
+            </p>
+          )}
+          <AddPhotoButton />
           <ModeToggle />
         </div>
       </div>
