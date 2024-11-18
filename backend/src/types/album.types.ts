@@ -9,7 +9,7 @@ export interface AlbumListResponse {
 export interface AlbumGetResponse {
   id: number;
   title: string;
-  user: Pick<User, "username">;
+  user: { username: string; id: number };
 }
 
 export interface Album {

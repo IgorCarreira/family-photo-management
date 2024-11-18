@@ -16,7 +16,7 @@ export async function getUserAlbums(
     throw new Error("Failed to fetch albums");
   }
 
-  const albums: Album[] = await response.json();
+  const albums = (await response.json()) as Album[];
 
   const user = await getUserById(userId);
 
@@ -45,14 +45,14 @@ export async function getAlbumById(albumId: number): Promise<AlbumGetResponse> {
     throw new Error("Failed to fetch photos");
   }
 
-  const album: Album = await response.json();
+  const album = (await response.json()) as Album;
 
   const user = await getUserById(album.userId);
 
   return {
     id: album.id,
     title: album.title,
-    user: { username: user.username },
+    user: { username: user.username, id: user.id },
   };
 }
 
@@ -68,7 +68,7 @@ export async function createAlbum(body?: Partial<Album>): Promise<Album> {
     },
   );
 
-  const album: Album = await albumResponse.json();
+  const album = (await albumResponse.json()) as Album;
 
   return album;
 }
@@ -84,7 +84,7 @@ export async function deleteAlbum(albumId: number): Promise<Album> {
     },
   );
 
-  const album: Album = await albumResponse.json();
+  const album = (await albumResponse.json()) as Album;
 
   return album;
 }
@@ -104,7 +104,7 @@ export async function patchAlbum(
     },
   );
 
-  const album: Album = await albumResponse.json();
+  const album = (await albumResponse.json()) as Album;
 
   return album;
 }
