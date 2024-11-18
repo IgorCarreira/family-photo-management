@@ -28,8 +28,11 @@ export const MyUsers = () => {
       <div className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold tracking-tight">My users</h1>
         {isLoading ? (
-          <div className="flex justify-center">
+          <div className="flex flex-col justify-center items-center w-full gap-4">
             <Loader2 className="animate-spin" />
+            <p className="text-muted-foreground">
+              Our servers are waking up, please wait a moment...
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-3 lg:grid-cols-3 xl:grid-cols-4">
