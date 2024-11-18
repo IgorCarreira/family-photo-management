@@ -27,7 +27,7 @@ export const AlbumCreateDialog = ({ handleCreate }: AlbumCreateDialogProps) => {
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Edit album</DialogTitle>
+        <DialogTitle>Create album</DialogTitle>
       </DialogHeader>
 
       <Form {...form}>
@@ -45,7 +45,7 @@ export const AlbumCreateDialog = ({ handleCreate }: AlbumCreateDialogProps) => {
         </form>
       </Form>
       <Button type="submit" size="sm" className="ml-auto" form="levelForm">
-        Apply
+        Create
       </Button>
     </DialogContent>
   );
