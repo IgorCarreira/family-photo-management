@@ -38,10 +38,17 @@ export const Albums = () => {
 
   const handleCreate: SubmitHandler<Album> = async (data) => {
     try {
+      const id = Math.floor(Math.random() * 1000) + 100;
       await createAlbumFn({
         ...data,
-        id: Math.floor(Math.random() * 1000) + 100,
+        id,
       });
+      queryClient.setQueryData(
+        ["photos", String(id)],
+        (cachedData: AlbumResponse) => {
+          if (!cachedData) return { album: { ...data, id, user }, photos: [] };
+        }
+      );
       setIsCreateDialogOpen(false);
       toast.success("The album has been created successfully.");
     } catch (error) {

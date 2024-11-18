@@ -1,4 +1,5 @@
 import { fetchAlbums } from "@/api/albums";
+import { useAuth } from "@/components/auth-context";
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
@@ -33,12 +34,13 @@ interface AddPhotoDialogProps {
 
 export const AddPhotoDialog = ({ handleCreate }: AddPhotoDialogProps) => {
   const { albumId } = useParams();
+  const { user } = useAuth();
   const queryClient = useQueryClient();
 
   const { data: albumsOptions } = useQuery({
-    queryKey: ["albums", 1],
-    queryFn: fetchAlbums(Number(1)),
-    enabled: () => !queryClient.getQueryData(["albums", 1]),
+    queryKey: ["albums", String(user?.id)],
+    queryFn: fetchAlbums(Number(user?.id)),
+    enabled: () => !queryClient.getQueryData(["albums", String(user?.id)]),
   });
   const form = useForm<Photo>({
     resolver: zodResolver(photoPatchSchema),
@@ -56,7 +58,7 @@ export const AddPhotoDialog = ({ handleCreate }: AddPhotoDialogProps) => {
           id="levelForm"
           onSubmit={form.handleSubmit(async (data) => {
             await handleCreate(data);
-            form.reset();
+            form.reset({ url: "", albumId: Number(albumId), title: "" });
           })}
           className="flex flex-col gap-2"
         >
