@@ -9,7 +9,7 @@ interface UserCardProps {
 export const UserCard = ({ user }: UserCardProps) => {
   return (
     <Link to={`${user.id}/albums`}>
-      <div className="flex border rounded p-4 cursor-pointer hover:border-primary items-center gap-4 bg-card">
+      <div className="grid grid-cols-[20%_1fr] border rounded p-4 cursor-pointer hover:border-primary items-center gap-4 bg-card">
         <UserIcon className="size-10" />
         <div className="flex flex-col">
           <span className="select-none">{user.username}</span>
