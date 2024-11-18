@@ -27,21 +27,31 @@ export const AddPhotoButton = ({ label }: AddPhotoButtonProps) => {
     async onSuccess(_, variables) {
       const targetAlbumId = String(variables.albumId);
 
-      if (targetAlbumId !== albumId) {
-        const updatedPhotos = await queryClient.fetchQuery({
-          queryKey: ["photos", targetAlbumId],
-          queryFn: fetchPhotos(Number(targetAlbumId)),
-        });
+      try {
+        if (targetAlbumId !== albumId) {
+          const updatedPhotos = await queryClient.fetchQuery({
+            queryKey: ["photos", targetAlbumId],
+            queryFn: fetchPhotos(Number(targetAlbumId)),
+          });
 
-        queryClient.setQueryData(["photos", targetAlbumId], {
-          ...updatedPhotos,
-          photos: [...updatedPhotos.photos, variables],
-        });
-      } else {
+          queryClient.setQueryData(["photos", targetAlbumId], {
+            ...updatedPhotos,
+            photos: [...updatedPhotos.photos, variables],
+          });
+        } else {
+          queryClient.setQueryData(
+            ["photos", albumId],
+            (data: PhotosResponse) => {
+              return { ...data, photos: [...data.photos, variables] };
+            }
+          );
+        }
+      } catch (error) {
         queryClient.setQueryData(
-          ["photos", albumId],
-          (data: PhotosResponse) => {
-            return { ...data, photos: [...data.photos, variables] };
+          ["photos", targetAlbumId],
+          (data: PhotosResponse | undefined) => {
+            const photos = data ? data.photos : [];
+            return { ...data, photos: [...photos, variables] };
           }
         );
       }
@@ -57,6 +67,7 @@ export const AddPhotoButton = ({ label }: AddPhotoButtonProps) => {
       setIsCreateDialogOpen(false);
       toast.success("The photo has been added successfully.");
     } catch (error) {
+      console.log({ error });
       toast.error(
         "An error occurred while adding the photo. Please try again."
       );
