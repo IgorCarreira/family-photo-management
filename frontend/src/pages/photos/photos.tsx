@@ -1,5 +1,5 @@
 import { fetchPhotos } from "@/api/photos";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
@@ -7,10 +7,12 @@ import { PhotoCard } from "./photo-card";
 
 export const Photos = () => {
   const { albumId } = useParams();
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
     queryKey: ["photos", albumId],
     queryFn: albumId ? fetchPhotos(Number(albumId)) : undefined,
+    enabled: () => !queryClient.getQueryData(["photos", albumId]),
   });
 
   if (isLoading)
