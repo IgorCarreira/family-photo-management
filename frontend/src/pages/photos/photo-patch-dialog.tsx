@@ -1,6 +1,5 @@
 import { fetchAlbums } from "@/api/albums";
 import { useAuth } from "@/components/auth-context";
-import { Button } from "@/components/ui/button";
 import {
   DialogContent,
   DialogDescription,
@@ -10,6 +9,7 @@ import {
 import { Form } from "@/components/ui/form";
 import { ImageInputField } from "@/components/ui/form/image-input-field";
 import { SelectField } from "@/components/ui/form/select-field";
+import { SubmitFormButton } from "@/components/ui/form/submit-form-button";
 import { TextInputField } from "@/components/ui/form/text-input-field";
 import { Photo } from "@/types/photos";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -90,9 +90,13 @@ export const PhotoPatchDialog = ({
           />
         </form>
       </Form>
-      <Button type="submit" size="sm" className="ml-auto" form="levelForm">
+      <SubmitFormButton
+        className="ml-auto"
+        form="levelForm"
+        isSubmitting={form.formState.isSubmitting}
+      >
         Apply
-      </Button>
+      </SubmitFormButton>
     </DialogContent>
   );
 };

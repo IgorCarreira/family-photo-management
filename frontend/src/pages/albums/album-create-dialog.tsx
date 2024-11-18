@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   DialogContent,
   DialogDescription,
@@ -6,6 +5,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
+import { SubmitFormButton } from "@/components/ui/form/submit-form-button";
 import { TextInputField } from "@/components/ui/form/text-input-field";
 import { Album } from "@/types/albums";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -46,9 +46,13 @@ export const AlbumCreateDialog = ({ handleCreate }: AlbumCreateDialogProps) => {
           />
         </form>
       </Form>
-      <Button type="submit" size="sm" className="ml-auto" form="levelForm">
+      <SubmitFormButton
+        className="ml-auto"
+        form="levelForm"
+        isSubmitting={form.formState.isSubmitting}
+      >
         Create
-      </Button>
+      </SubmitFormButton>
     </DialogContent>
   );
 };
