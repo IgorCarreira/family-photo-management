@@ -1,0 +1,18 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: family_photo_management_api
+    ports:
+      - 3030:3030
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: family_photo_management_web
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
