@@ -67,7 +67,6 @@ export const AddPhotoButton = ({ label }: AddPhotoButtonProps) => {
       setIsCreateDialogOpen(false);
       toast.success("The photo has been added successfully.");
     } catch (error) {
-      console.log({ error });
       toast.error(
         "An error occurred while adding the photo. Please try again."
       );
