@@ -3,6 +3,7 @@ import { NotFound } from "./pages/404";
 import AppLayout from "./pages/_layout/app";
 import { MyUsers } from "./pages/my-users/my-users";
 import { Albums } from "./pages/albums/albums";
+import { Photos } from "./pages/photos/photos";
 
 export const router = createBrowserRouter(
   [
@@ -22,6 +23,10 @@ export const router = createBrowserRouter(
         {
           path: "/my-users/:userId/albums",
           element: <Albums />,
+        },
+        {
+          path: "/albums/:albumId/photos",
+          element: <Photos />,
         },
       ],
     },
