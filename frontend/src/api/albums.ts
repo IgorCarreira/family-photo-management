@@ -37,3 +37,17 @@ export const patchAlbum = async (album: Album): Promise<Album> => {
 
   return response.json();
 };
+
+export const createAlbum = async (album: Album): Promise<Album> => {
+  const response = await fetch(`${apiUrl}/albums`, {
+    method: "POST",
+    body: JSON.stringify(album),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create album");
+  }
+
+  return response.json();
+};

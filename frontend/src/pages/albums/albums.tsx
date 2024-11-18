@@ -1,19 +1,51 @@
-import { fetchAlbums } from "@/api/albums";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { createAlbum, fetchAlbums } from "@/api/albums";
+import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
+import { Album, AlbumResponse } from "@/types/albums";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Loader2, PlusCircle } from "lucide-react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { SubmitHandler } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 import { AlbumCard } from "./album-card";
+import { AlbumCreateDialog } from "./album-create-dialog";
 
 export const Albums = () => {
   const { userId } = useParams();
   const queryClient = useQueryClient();
-
   const { data, isLoading } = useQuery({
     queryKey: ["albums", userId],
     queryFn: userId ? fetchAlbums(Number(userId)) : undefined,
     enabled: () => !queryClient.getQueryData(["albums", userId]),
   });
+  const { mutateAsync: createAlbumFn } = useMutation({
+    mutationFn: createAlbum,
+    onSuccess(_, variables: Album) {
+      queryClient.setQueryData(["albums", userId], (data: AlbumResponse) => ({
+        ...data,
+        albums: [...data.albums, variables],
+      }));
+    },
+  });
+
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+
+  const handleCreate: SubmitHandler<Album> = async (data) => {
+    try {
+      await createAlbumFn({
+        ...data,
+        id: Math.floor(Math.random() * 1000) + 100,
+      });
+      setIsCreateDialogOpen(false);
+      toast.success("The album has been created successfully.");
+    } catch (error) {
+      toast.error(
+        "An error occurred while creating the album. Please try again."
+      );
+    }
+  };
 
   if (isLoading)
     return (
@@ -26,15 +58,29 @@ export const Albums = () => {
     <>
       <Helmet title={`${data?.user?.username || "User"}'s albums`} />
       <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold tracking-tight">
-          {data?.user?.username || "User"}'s albums
-        </h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold tracking-tight">
+            {data?.user?.username || "User"}'s albums
+          </h1>
+          <Button
+            className="flex gap-2"
+            onClick={() => {
+              setIsCreateDialogOpen(true);
+            }}
+          >
+            <PlusCircle />
+            <p>Create new album</p>
+          </Button>
+        </div>
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-3 xl:grid-cols-4">
           {data?.albums?.map((album) => (
             <AlbumCard album={album} key={album.id} />
           ))}
         </div>
       </div>
+      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+        <AlbumCreateDialog handleCreate={handleCreate} />
+      </Dialog>
     </>
   );
 };
